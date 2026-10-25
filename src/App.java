@@ -12,7 +12,7 @@ abstract class Character {
     public boolean isAlive() {
         return this.hpStat > 0;                       
     }
-    public void attack(Character target){
+    public void attack(Character target) {
         target.takeDamage(this.dmgStat);
     }
     public void takeDamage(float damage) {
@@ -24,9 +24,9 @@ abstract class Character {
     public abstract void displayStatus(); 
 }
 
-class Tank extends Character{
+class Tank extends Character {
     protected float armorStat;
-    public Tank(String name, float hpStat, float dmgStat, float spdStat, float armorStat){
+    public Tank(String name, float hpStat, float dmgStat, float spdStat, float armorStat) {
         super(name, hpStat, dmgStat, spdStat);
         this.armorStat = armorStat;
     }
@@ -34,27 +34,27 @@ class Tank extends Character{
     public void takeDamage(float damage) {
         float effectiveDamage = Math.max(0, damage - this.armorStat);
         this.hpStat -= effectiveDamage;
-        if (this.armorStat != 0){
+        if (this.armorStat != 0) {
             --this.armorStat;
         }
         if (this.hpStat < 0) {
             this.hpStat = 0;
         }
     }
-    public void displayStatus(){
+    public void displayStatus() {
         System.out.println(name + " | HP: " + this.hpStat + " ARMOR: " + this.armorStat);
     }
 }
 
 class Mage extends Character {
     protected float manaStat;
-    public Mage(String name, float hpStat, float dmgStat, float spdStat, float manaStat){
+    public Mage(String name, float hpStat, float dmgStat, float spdStat, float manaStat) {
         super(name, hpStat, dmgStat, spdStat);
         this.manaStat = manaStat;
     }
 
-    public void castSpell(Character target){
-        if (this.manaStat <= 0){
+    public void castSpell(Character target) {
+        if (this.manaStat <= 0) {
             takeDamage(5);
         }
         else {
@@ -63,23 +63,23 @@ class Mage extends Character {
         }
     }
     @Override
-    public void attack(Character target){
-        if (this.manaStat > 0){
+    public void attack(Character target) {
+        if (this.manaStat > 0) {
             castSpell(target);
         }
         else{
             super.attack(target);
         }
     }
-    public void displayStatus(){
+    public void displayStatus() {
     System.out.println(name + " | HP: " + this.hpStat + " MANA: " + this.manaStat);
     }
 }
 
 class Battle {
-    public static void startBattle(Character p1, Character p2){
+    public static void startBattle(Character p1, Character p2) {
         int round = 1;
-        while (p1.isAlive() && p2.isAlive()){
+        while (p1.isAlive() && p2.isAlive()) {
             System.out.println("\n--- ROUND " + round + " ---");
 
             Character firstAttacker;
