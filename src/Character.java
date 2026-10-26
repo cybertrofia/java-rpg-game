@@ -25,33 +25,32 @@ public abstract class Character {
     public abstract void specialAttack(Character target); // unique class attack
 }
 class Tank extends Character {
-    private float armorStat; // reduces damage taken
-    private float staminaStat; // specialAttack resource
-    public Tank(String name, float hpStat, float dmgStat, float spdStat, float armorStat) {
+    private float resistStat; // reduces damage taken && specialAttack resource
+    public Tank(String name, float hpStat, float dmgStat, float spdStat, float resistStat) {
         super(name, hpStat, dmgStat, spdStat);
-        this.armorStat = armorStat;
+        this.resistStat = resistStat;
     }
     @Override
     public void takeDamage(float damage) {
-        float effectiveDamage = Math.max(0, damage - this.armorStat);
+        float effectiveDamage = Math.max(0, damage - this.resistStat);
         this.hpStat -= effectiveDamage;
-        if (this.armorStat != 0) {
-            --this.armorStat;
+        if (this.resistStat != 0) {
+            --this.resistStat;
         }
         if (this.hpStat < 0) {
             this.hpStat = 0;
         }
     }
     public void displayStatus() {
-        System.out.println(name + " | HP: " + this.hpStat + " ARMOR: " + this.armorStat);
+        System.out.println(name + " | HP: " + this.hpStat + " ARMOR: " + this.resistStat);
     }
     public void specialAttack(Character target){ // specialAttack for Tank class (placeholder)
-        if (this.staminaStat <= 0) {
+        if (this.resistStat <= 0) {
             takeDamage(5);
         }
         else {
             target.takeDamage(dmgStat + 5); // placeholder modifier
-            --this.staminaStat;
+            --this.resistStat;
         }
     }
 }

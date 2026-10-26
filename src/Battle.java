@@ -9,23 +9,39 @@ public class Battle {
             int choice = scanner.nextInt();
 
             if (pl.spdStat > opp.spdStat) { // attack and be attacked cycle (spd differentiator)
+                System.out.println("\nYou attacked first!\n");
                 if (choice == 1) {
                     pl.attack(opp);
                 }
-                if (choice == 2) {
+                else if (choice == 2) {
                     pl.specialAttack(opp);
                 }
                 else {
                     System.out.println("\nNot valid. Default option 'Basic' chosen.");
                     pl.attack(opp);
                 }
-                System.out.println("\nYou attacked first!\n");
+                if (opp.isAlive()) {
+                    opp.attack(pl);
+                }
+                
             }
             else {
-                opp.attack(pl);
                 System.out.println("\nYou're slower!\n");
+                opp.attack(pl);
+                if (pl.isAlive()){
+                    if (choice == 1) {
+                        pl.attack(opp);
+                    }
+                    else if (choice == 2) {
+                        pl.specialAttack(opp);
+                    }
+                    else {
+                        System.out.println("\nNot valid. Default option 'Basic' chosen.");
+                        pl.attack(opp);
+                    }
+                }
             }
-            
+
             pl.displayStatus();
             opp.displayStatus();
 
@@ -38,6 +54,4 @@ public class Battle {
         }
         scanner.close();
     }    
-}
-
-// public static void choice() {if (choice == 1) {pl.attack(opp);}else {pl.specialAttack(opp);}} 
+ }
