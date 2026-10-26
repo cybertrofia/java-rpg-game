@@ -3,7 +3,7 @@ public abstract class Character {
     protected float hpStat;
     protected float dmgStat;
     protected float spdStat;
-    public Character(String name, float hpStat, float dmgStat, float spdStat) {
+    public Character(String name, float hpStat, float dmgStat, float spdStat) { // basic Character constructor
         this.name = name;
         this.hpStat = hpStat;
         this.dmgStat = dmgStat;
@@ -21,10 +21,12 @@ public abstract class Character {
         this.hpStat = 0;
         }
     }
-    public abstract void displayStatus(); 
+    public abstract void displayStatus(); // specific stat status display method (HP and unique stats/modifiers)
+    public abstract void specialAttack(Character target); // unique class attack
 }
 class Tank extends Character {
-    protected float armorStat;
+    private float armorStat; // reduces damage taken
+    private float staminaStat; // specialAttack resource
     public Tank(String name, float hpStat, float dmgStat, float spdStat, float armorStat) {
         super(name, hpStat, dmgStat, spdStat);
         this.armorStat = armorStat;
@@ -43,30 +45,30 @@ class Tank extends Character {
     public void displayStatus() {
         System.out.println(name + " | HP: " + this.hpStat + " ARMOR: " + this.armorStat);
     }
+    public void specialAttack(Character target){ // specialAttack for Tank class (placeholder)
+        if (this.staminaStat <= 0) {
+            takeDamage(5);
+        }
+        else {
+            target.takeDamage(dmgStat + 5); // placeholder modifier
+            --this.staminaStat;
+        }
+    }
 }
 class Mage extends Character {
-    protected float manaStat;
+    protected float manaStat; // specialAttack resource
     public Mage(String name, float hpStat, float dmgStat, float spdStat, float manaStat) {
         super(name, hpStat, dmgStat, spdStat);
         this.manaStat = manaStat;
     }
-
-    public void castSpell(Character target) {
+    @Override
+    public void specialAttack(Character target) { //specialAttack for Mage class (castSpell)
         if (this.manaStat <= 0) {
             takeDamage(5);
         }
         else {
             target.takeDamage(dmgStat*2);
             --this.manaStat;
-        }
-    }
-    @Override
-    public void attack(Character target) {
-        if (this.manaStat > 0) {
-            castSpell(target);
-        }
-        else{
-            super.attack(target);
         }
     }
     public void displayStatus() {

@@ -1,33 +1,39 @@
+import java.util.Scanner;
+
 public class Battle {
-    public static void startBattle(Character p1, Character p2) {
-        int round = 1;
-        while (p1.isAlive() && p2.isAlive()) {
-            System.out.println("\n--- ROUND " + round + " ---");
+    public static void startBattle(Character pl, Character opp) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("\n--- A BATTLE WITH " + opp.name + " HAS STARTED ---\n");
+        while (pl.isAlive() && opp.isAlive()) {
+            System.out.println("\nWhat will you do...\n 1. Basic\n 2. Special\nChoice:");
+            int choice = scanner.nextInt();
 
-            Character firstAttacker;
-            Character secondAttacker;
-
-            if (p1.spdStat > p2.spdStat) {
-                firstAttacker = p1;
-                secondAttacker = p2;
+            if (pl.spdStat > opp.spdStat) { // attack and be attacked cycle (spd differentiator)
+                if (choice == 1) {
+                    pl.attack(opp);
+                }
+                else {
+                    pl.specialAttack(opp);
+                }
+                System.out.println("\nYou attacked first!\n");
             }
             else {
-                secondAttacker = p1;
-                firstAttacker = p2;
+                opp.attack(pl);
+                System.out.println("\nYou're slower!\n");
             }
+            
+            pl.displayStatus();
+            opp.displayStatus();
 
-            System.out.println(firstAttacker.name + " attacks first.\n");
-            firstAttacker.attack(secondAttacker);
-            firstAttacker.displayStatus();
-
-            if (secondAttacker.isAlive()) {
-            secondAttacker.attack(firstAttacker);
-            secondAttacker.displayStatus();
-            } 
-            else {
-            System.out.println("\n" + secondAttacker.name + " has been defeated.\n" + firstAttacker.name + " won! ");
+            if (!opp.isAlive()) {
+                System.out.println("\nBattle has ended: You Won!");
             }
-            round++;
+            if (!pl.isAlive()) {
+                System.out.println("\nBattle has ended: You lost...");
+            }
         }
+        scanner.close();
     }    
 }
+
+// public static void choice() {if (choice == 1) {pl.attack(opp);}else {pl.specialAttack(opp);}} 
