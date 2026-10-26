@@ -1,4 +1,4 @@
-abstract class Character {
+public abstract class Character {
     protected String name;
     protected float hpStat;
     protected float dmgStat;
@@ -23,7 +23,6 @@ abstract class Character {
     }
     public abstract void displayStatus(); 
 }
-
 class Tank extends Character {
     protected float armorStat;
     public Tank(String name, float hpStat, float dmgStat, float spdStat, float armorStat) {
@@ -45,7 +44,6 @@ class Tank extends Character {
         System.out.println(name + " | HP: " + this.hpStat + " ARMOR: " + this.armorStat);
     }
 }
-
 class Mage extends Character {
     protected float manaStat;
     public Mage(String name, float hpStat, float dmgStat, float spdStat, float manaStat) {
@@ -73,47 +71,5 @@ class Mage extends Character {
     }
     public void displayStatus() {
     System.out.println(name + " | HP: " + this.hpStat + " MANA: " + this.manaStat);
-    }
-}
-
-class Battle {
-    public static void startBattle(Character p1, Character p2) {
-        int round = 1;
-        while (p1.isAlive() && p2.isAlive()) {
-            System.out.println("\n--- ROUND " + round + " ---");
-
-            Character firstAttacker;
-            Character secondAttacker;
-
-            if (p1.spdStat > p2.spdStat) {
-                firstAttacker = p1;
-                secondAttacker = p2;
-            }
-            else {
-                secondAttacker = p1;
-                firstAttacker = p2;
-            }
-
-            System.out.println(firstAttacker.name + " attacks first.\n");
-            firstAttacker.attack(secondAttacker);
-            firstAttacker.displayStatus();
-
-            if (secondAttacker.isAlive()) {
-            secondAttacker.attack(firstAttacker);
-            secondAttacker.displayStatus();
-            } 
-            else {
-            System.out.println("\n" + secondAttacker.name + " has been defeated.\n" + firstAttacker.name + " won! ");
-            }
-            round++;
-        }
-    }    
-}
-
-public class App {
-    public static void main(String[] args) throws Exception {
-    Mage p1 = new Mage("Joe", 14, 6, 6, 2);
-    Tank p2 = new Tank("Oej", 24, 4, 2, 4);
-    Battle.startBattle(p1, p2);
     }
 }
