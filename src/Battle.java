@@ -4,7 +4,7 @@ public class Battle {
     public static void startBattle(Character pl, Character opp) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("\n--- A BATTLE WITH " + opp.name + " HAS STARTED ---\n");
-        while (pl.isAlive() && opp.isAlive()) {
+        while (pl.isAlive() && opp.isAlive()) { // WHILE cycle
             System.out.println("\nWhat will you do...\n 1. Basic\n 2. Special\nChoice:");
             int choice = scanner.nextInt();
 
@@ -12,8 +12,12 @@ public class Battle {
                 if (choice == 1) {
                     pl.attack(opp);
                 }
-                else {
+                if (choice == 2) {
                     pl.specialAttack(opp);
+                }
+                else {
+                    System.out.println("\nNot valid. Default option 'Basic' chosen.");
+                    pl.attack(opp);
                 }
                 System.out.println("\nYou attacked first!\n");
             }
