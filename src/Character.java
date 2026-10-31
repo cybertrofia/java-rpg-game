@@ -32,10 +32,13 @@ class Tank extends Character {
     }
     @Override
     public void takeDamage(float damage) {
-        float effectiveDamage = Math.max(0, damage - this.resistStat);
-        this.hpStat -= effectiveDamage;
         if (this.resistStat != 0) {
+        float effectiveDamage = Math.max(0, damage - this.resistStat);
+        this.hpStat -= effectiveDamage;            
             --this.resistStat;
+        }
+        else {
+            this.hpStat -= damage;
         }
         if (this.hpStat < 0) {
             this.hpStat = 0;
@@ -73,4 +76,34 @@ class Mage extends Character {
     public void displayStatus() {
     System.out.println(name + " | HP: " + this.hpStat + " MANA: " + this.manaStat);
     }
+}
+class Thief extends Character {
+    protected float stealthStat;
+    public Thief(String name, float hpStat, float dmgStat, float spdStat, float stealthStat) {
+        super(name, hpStat, dmgStat, spdStat);
+        this.stealthStat = stealthStat;
+    }
+    @Override
+    public void specialAttack(Character target) {
+        if (this.stealthStat <= 0) {
+            takeDamage(5);
+        }
+        else {
+            target.takeDamage(dmgStat + spdStat);
+            this.stealthStat = 0;
+        }
+    }
+    public void displayStatus() {
+        System.out.println(name + " | HP: " + this.hpStat + " STEALTH: " + this.stealthStat);
+    }
+    public void takeDamage(float damage) {
+        if (this.stealthStat != 0) {
+            damage = 0;
+            this.stealthStat -= 5;
+        }
+        this.hpStat -= damage;
+        if (this.hpStat < 0) {
+            this.hpStat = 0;
+        }
+    }    
 }
